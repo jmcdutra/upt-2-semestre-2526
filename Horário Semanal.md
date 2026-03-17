@@ -75,10 +75,8 @@ tags:
 
 ## Datas Importantes
 
-> [!danger] Urgente — Esta semana
-> - [ ] **POO** — Quiz #1 (semana de 16–20 mar) · em aula
-
 > [!warning] Março
+> - [ ] **POO** — Quiz #1 (semana de 16–20 mar) · Sala a definir
 > - [ ] **SIC** — Quiz #1 · 20% · 18/03/2026 · 13:30h · Sala a definir
 > - [ ] **FF** — Teste #1 · 50% · 27/03/2026 · 18:00h · Sala a definir
 

@@ -1,0 +1,68 @@
+filters: file.hasTag("avaliacao")
+formulas:
+  dias_ate: if(data, (date(data) - today()).days, "")
+  urgencia: if(estado == "concluido", "✅ Concluído", if(!data, "❓ Sem data", if((date(data) - today()).days < 0, "⬛ Passou", if((date(data) - today()).days == 0, "🚨 HOJE", if((date(data) - today()).days <= 3, "🔴 Em 3 dias", if((date(data) - today()).days <= 7, "🟠 Esta semana", if((date(data) - today()).days <= 14, "🟡 Próximas 2 sem.", if((date(data) - today()).days <= 30, "🔵 Este mês", "🟢 Com tempo"))))))))
+  urgencia_ordem: if(estado == "concluido", 99, if(!data, 98, if((date(data) - today()).days < 0, 97, (date(data) - today()).days)))
+  peso_fmt: if(peso, peso.toString() + "%", "")
+  nota_min_fmt: if(nota_min, nota_min.toString() + " val.", "—")
+properties:
+  cadeira:
+    displayName: Cadeira
+  tipo:
+    displayName: Tipo
+  data:
+    displayName: Data
+  formula.dias_ate:
+    displayName: Dias
+  formula.urgencia:
+    displayName: Urgência
+  formula.peso_fmt:
+    displayName: Peso
+  formula.nota_min_fmt:
+    displayName: Nota Mín.
+  nota:
+    displayName: Nota Final
+  estado:
+    displayName: Estado
+views:
+  - type: cards
+    name: ⚡ Próximas Avaliações
+    filters:
+      and:
+        - estado != "concluido"
+        - if(data, (date(data) - today()).days >= 0, false)
+    order:
+      - formula.urgencia
+      - file.name
+      - cadeira
+      - data
+      - formula.dias_ate
+      - formula.peso_fmt
+      - formula.nota_min_fmt
+  - type: table
+    name: 📅 Calendário Completo
+    order:
+      - formula.urgencia
+      - file.name
+      - cadeira
+      - tipo
+      - data
+      - formula.dias_ate
+      - formula.peso_fmt
+      - formula.nota_min_fmt
+      - nota
+      - estado
+  - type: table
+    name: 📊 Por Cadeira
+    groupBy:
+      property: cadeira
+      direction: ASC
+    order:
+      - file.name
+      - tipo
+      - data
+      - formula.urgencia
+      - formula.dias_ate
+      - formula.peso_fmt
+      - nota
+      - estado

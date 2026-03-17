@@ -27,6 +27,12 @@ cssclasses:
 
 ---
 
+## ⚡ Próximas Avaliações
+
+![[Avaliações.base#⚡ Próximas Avaliações]]
+
+---
+
 ## Visão Geral
 
 ### Tracking de Cadeiras

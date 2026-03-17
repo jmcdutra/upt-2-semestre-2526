@@ -51,9 +51,9 @@ ects: 5
 
 ### Época Especial
 
-| Elemento | Peso |
-|----------|------|
-| Exame Final (teste escrito) | 100% |
+| Elemento | Peso | Nota Mín. |
+|----------|------|-----------|
+| Exame Final (teste escrito) | 100% | — |
 
 ---
 
