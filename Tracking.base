@@ -1,0 +1,60 @@
+filters:
+  and:
+    - file.hasTag("cadeira/SI") || file.hasTag("cadeira/SIC") || file.hasTag("cadeira/FF") || file.hasTag("cadeira/POO") || file.hasTag("cadeira/RC")
+formulas:
+  dias_desde_criacao: (now() - file.ctime).days.round(0)
+  dias_ate_entrega: if(entrega, (date(entrega) - today()).days, "")
+  estado_icon: if(estado == "concluido", "✅", if(estado == "em-curso", "🔄", if(estado == "pendente", "⏳", if(estado == "revisao", "📖", "—"))))
+  tipo_icon: if(tipo == "aula", "📒", if(tipo == "trabalho", "📝", if(tipo == "estudo", "🧠", if(tipo == "revisão", "📖", "📄"))))
+properties:
+  cadeira:
+    displayName: Cadeira
+  tipo:
+    displayName: Tipo
+  estado:
+    displayName: Estado
+  entrega:
+    displayName: Entrega
+  formula.dias_ate_entrega:
+    displayName: Dias p/ Entrega
+  formula.dias_desde_criacao:
+    displayName: Criado há (dias)
+views:
+  - type: table
+    name: Todos os Documentos
+    order:
+      - formula.tipo_icon
+      - file.name
+      - cadeira
+      - tipo
+      - formula.estado_icon
+      - entrega
+      - formula.dias_ate_entrega
+  - type: table
+    name: Trabalhos Pendentes
+    filters:
+      and:
+        - tipo == "trabalho"
+        - estado != "concluido"
+    order:
+      - file.name
+      - cadeira
+      - formula.estado_icon
+      - entrega
+      - formula.dias_ate_entrega
+  - type: table
+    name: Aulas
+    filters:
+      and:
+        - tipo == "aula"
+    order:
+      - file.name
+      - cadeira
+      - file.ctime
+  - type: cards
+    name: Por Cadeira
+    order:
+      - file.name
+      - cadeira
+      - formula.tipo_icon
+      - formula.estado_icon
